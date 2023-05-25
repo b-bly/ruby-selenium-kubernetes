@@ -1,0 +1,32 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args: [
+      "build",
+      "-t",
+      "${_REGISTRY_URL}/$PROJECT_ID/${_REGISTRY}/ruby-selenium-kubernetes:latest",
+      "."
+    ]
+  - name: "gcr.io/cloud-builders/docker"
+    args: [
+      "push",
+      "${_REGISTRY_URL}/$PROJECT_ID/${_REGISTRY}/ruby-selenium-kubernetes:latest"
+    ]
+  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  #   entrypoint: gcloud
+  #   args: [
+  #     "run",
+  #     "deploy",
+  #     "ruby-selenium-kubernetes",
+  #     "--region",
+  #     "us-central1",
+  #     "--image",
+  #     "${_REGISTRY_URL}/$PROJECT_ID/${_REGISTRY}/ruby-selenium-kubernetes:latest"
+  #   ]
+substitutions:
+  _REGISTRY_URL: "us-central1-docker.pkg.dev"
+  _REGISTRY: "ruby-selenium-kubernetes"
+options:
+  logging: CLOUD_LOGGING_ONLY
+# images: [
+#     "${_REGISTRY_URL}/$PROJECT_ID/${_REGISTRY}/ruby-selenium-kubernetes:latest"
+#   ]

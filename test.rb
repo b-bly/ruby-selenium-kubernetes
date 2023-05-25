@@ -1,8 +1,16 @@
 require 'selenium-webdriver'
 require 'test-unit'
+require 'dotenv/load'
+
+
 class GoogleTest < Test::Unit::TestCase
 def setup
-  @driver = Selenium::WebDriver.for :chrome
+#   @driver = Selenium::WebDriver.for :chrome
+
+  puts ENV['SELENIUM_URL']
+  options = Selenium::WebDriver::Chrome::Options.new
+  puts options.inspect
+  @driver = Selenium::WebDriver.for :remote, url: ENV['SELENIUM_URL'], options: options
   @url = "https://www.google.com/"
   @driver.manage.timeouts.implicit_wait = 30
   
@@ -17,7 +25,8 @@ def test_google_search
   @query_box.submit
 # Add an explicit wait to ensure the page finishes loading
   wait = Selenium::WebDriver::Wait.new(:timeout => 30)
-wait.until{@driver.title.include? "Selenium webdriver - Google Search"}
+  wait.until{@driver.title.include? "Selenium webdriver - Google Search"}
+
 # Assert that the search bar title is what you expect
   assert_equal("Selenium webdriver - Google Search", @driver.title)
   

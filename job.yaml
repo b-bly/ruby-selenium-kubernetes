@@ -1,0 +1,13 @@
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: JOB
+spec:
+  template:
+    spec:
+      template:
+        spec:
+          containers:
+          - image: ${IMAGE}
+            env:
+            - name: KEY-1
